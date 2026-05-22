@@ -1,8 +1,9 @@
+import type { Request, Response } from "express";
 import { prisma } from "../config/db.js";
 import bcrypt from "bcryptjs";
 import { generateToken } from "../utils/generateToken.js";
 
-const signup = async (req, res) => {
+const signup = async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
   const user = await prisma.user.findUnique({ where: { email: email } });
   if (user) {
@@ -34,7 +35,7 @@ const signup = async (req, res) => {
   });
 };
 
-const login = async (req, res) => {
+const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
   const user = await prisma.user.findUnique({ where: { email: email } });
   if (!user) {
@@ -57,7 +58,7 @@ const login = async (req, res) => {
   });
 };
 
-const logout = async (req, res) => {
+const logout = async (_req: Request, res: Response) => {
   res.cookie("JWT", "", {
     httpOnly: true,
     expires: new Date(0),

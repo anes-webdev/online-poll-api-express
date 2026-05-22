@@ -11,13 +11,9 @@ connectDB();
 
 const app = express();
 
-// Body parsing middlewares
-// In all requests handles json req, without this code we can't access json in request body
 app.use(express.json());
-// Automatically parse data in html form submission:
 app.use(express.urlencoded({ extended: true }));
 
-// API Routes:
 app.use("/auth", authRoutes);
 app.use("/movies", movieRoutes);
 app.use("/watch-list", watchListRoutes);

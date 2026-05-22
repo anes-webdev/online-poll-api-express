@@ -1,4 +1,3 @@
-// Validate body in each request:
 import { z } from "zod";
 
 const addToWatchListSchema = z.object({
