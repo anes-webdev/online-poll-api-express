@@ -13,50 +13,48 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  name      String
-  email     String   @unique
+  id        String   @id
+  username  String   @unique
   password  String
-  createdAt DateTime @default(now())
 
-  watchListItems WatchListItem[]
-  movies         Movie[]
+  // watchListItems WatchListItem[]
+  // movies         Movie[]
 }
 
-model Movie {
-  id          String   @id @default(uuid())
-  title       String
-  overview    String?
-  releaseYear Int
-  genres      String[] @default([])
-  posterUrl   String?
-  createdBy   String
-  createdAt   DateTime @default(now())
+// model Movie {
+//   id          String   @id @default(uuid())
+//   title       String
+//   overview    String?
+//   releaseYear Int
+//   genres      String[] @default([])
+//   posterUrl   String?
+//   createdBy   String
+//   createdAt   DateTime @default(now())
 
-  creator        User            @relation(fields: [createdBy], references: [id], onDelete: Cascade)
-  watchListItems WatchListItem[]
-}
+//   creator        User            @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+//   watchListItems WatchListItem[]
+// }
 
-model WatchListItem {
-  id        String          @id @default(uuid())
-  userId    String
-  movieId   String
-  status    WatchListStatus @default(PLANNED)
-  rating    Int?
-  notes     String?
-  createdAt DateTime        @default(now())
-  updatedAt DateTime        @default(now())
+// model WatchListItem {
+//   id        String          @id @default(uuid())
+//   userId    String
+//   movieId   String
+//   status    WatchListStatus @default(PLANNED)
+//   rating    Int?
+//   notes     String?
+//   createdAt DateTime        @default(now())
+//   updatedAt DateTime        @default(now())
 
-  // Relations:
-  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  movie Movie @relation(fields: [movieId], references: [id], onDelete: Cascade)
-  @@unique([userId, movieId])
-}
+//   // Relations:
+//   user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   movie Movie @relation(fields: [movieId], references: [id], onDelete: Cascade)
+//   @@unique([userId, movieId])
+// }
 
-// Accepted items as :
-enum WatchListStatus {
-  PLANNED
-  WATCHING
-  COMPLETED
-  DROPPED
-}
+// // Accepted items as :
+// enum WatchListStatus {
+//   PLANNED
+//   WATCHING
+//   COMPLETED
+//   DROPPED
+// }
