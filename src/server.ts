@@ -4,6 +4,7 @@ import authRoutes from "./routes/authRoutes.js";
 import watchListRoutes from "./routes/watchListRoutes.js";
 import { config } from "dotenv";
 import { connectDB, disconnectDB } from "./config/db.js";
+import cors from "cors";
 import "dotenv/config";
 
 config();
@@ -13,6 +14,9 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors({
+  origin: process.env.CLIENT_URL,
+}));
 
 app.use("/auth", authRoutes);
 app.use("/movies", movieRoutes);
