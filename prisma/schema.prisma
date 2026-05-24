@@ -1,7 +1,4 @@
-// This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
   provider = "prisma-client-js"
@@ -17,9 +14,52 @@ model User {
   username  String   @unique
   password  String
 
-  // watchListItems WatchListItem[]
-  // movies         Movie[]
+  polls Poll[]
 }
+
+model Poll {
+  id String @id
+  title String
+  description String
+  createdAt DateTime @default(now())
+  lastModifiedAt DateTime @updatedAt
+  createdBy String
+
+  creator User @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+  options Option[]
+  participants Participant[]
+}
+
+model Option {
+  id String @id
+  // Todo: Change this to just "name":
+  optionName String
+  pollId String
+
+  poll Poll @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  votes Vote[]
+}
+
+model Participant {
+  id String @id
+  name String
+  createdAt DateTime @default(now())
+  pollId String
+
+  poll Poll @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  votes Vote[]
+}
+
+model Vote {
+  id String @id
+  optionId String
+  participantId String
+
+  option Option @relation(fields: [optionId], references: [id], onDelete: Cascade)
+  participant Participant @relation(fields: [participantId], references: [id], onDelete: Cascade)
+  @@unique([optionId, participantId])
+}
+
 
 // model Movie {
 //   id          String   @id @default(uuid())
@@ -58,3 +98,8 @@ model User {
 //   COMPLETED
 //   DROPPED
 // }
+
+
+// After each DB update run:
+// npx prisma migrate dev --name <migration name>
+// npx prisma generate
