@@ -1,9 +1,10 @@
 import express from "express";
-import movieRoutes from "./routes/movieRoutes.js";
+import pollRoutes from "./routes/pollRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import watchListRoutes from "./routes/watchListRoutes.js";
 import { config } from "dotenv";
 import { connectDB, disconnectDB } from "./config/db.js";
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import "dotenv/config";
 
@@ -14,12 +15,14 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(cors({
   origin: process.env.CLIENT_URL,
+  credentials: true
 }));
 
 app.use("/auth", authRoutes);
-app.use("/movies", movieRoutes);
+app.use("/polls", pollRoutes);
 app.use("/watch-list", watchListRoutes);
 
 const port = 5001;
