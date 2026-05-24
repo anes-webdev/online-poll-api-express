@@ -1,10 +1,10 @@
 import express from "express";
-import { movies } from "../controllers/movieController.js";
+import { polls } from "../controllers/pollController.js";
 import { authMiddleware } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
 router.use(authMiddleware);
-router.get("/", movies);
+router.get("/", polls);
 
 export default router;
