@@ -2,12 +2,12 @@ import express from "express";
 import pollRoutes from "./routes/pollRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import voteRoutes from "./routes/voteRoutes.js";
-import watchListRoutes from "./routes/watchListRoutes.js";
 import { config } from "dotenv";
 import { connectDB, disconnectDB } from "./config/db.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import "dotenv/config";
+// Todo: add a readme file:
 
 config();
 connectDB();
