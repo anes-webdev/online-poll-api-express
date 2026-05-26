@@ -9,7 +9,7 @@ export const generateToken = (userId: string, res: Response) => {
   const token = jwt.sign(payload, process.env.JWT_SECRET!, signOptions);
   res.cookie("JWT", token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: true,
     sameSite: "none",
     maxAge: 1000 * 60 * 60 * 24 * 7,
   });
