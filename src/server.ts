@@ -1,6 +1,7 @@
 import express from "express";
 import pollRoutes from "./routes/pollRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import voteRoutes from "./routes/voteRoutes.js";
 import watchListRoutes from "./routes/watchListRoutes.js";
 import { config } from "dotenv";
 import { connectDB, disconnectDB } from "./config/db.js";
@@ -23,7 +24,7 @@ app.use(cors({
 
 app.use("/auth", authRoutes);
 app.use("/polls", pollRoutes);
-app.use("/watch-list", watchListRoutes);
+app.use("/polls/votes", voteRoutes);
 
 const port = 5001;
 const server = app.listen(port, () => {

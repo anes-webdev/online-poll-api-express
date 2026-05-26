@@ -15,11 +15,13 @@ import { requirePollOwner } from "../middleware/requirePollOwner.js";
 const router = express.Router();
 
 router.use(authMiddleware);
+
 router.get("/", getPolls);
 router.get("/:id", requirePollOwner(), getPoll);
 router.get("/:id/votes", requirePollOwner(), getPollVotes);
 router.delete("/:id", requirePollOwner(), deletePoll);
 router.put("/:id", requirePollOwner(), validateRequest(editPollSchema), editPoll);
 router.post("/", validateRequest(createPollSchema), createPoll);
+
 
 export default router;

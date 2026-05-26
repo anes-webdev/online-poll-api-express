@@ -23,7 +23,6 @@ const getPolls = async (req: Request, res: Response) => {
 };
 // Todo: Test user specific polls:
 const getPoll = async (req: Request, res: Response) => {
-  console.log("here");
   const pollId = req.params.id as string;
   const poll = await prisma.poll.findUnique({
     where: { id: pollId },
@@ -34,6 +33,7 @@ const getPoll = async (req: Request, res: Response) => {
   return res.status(200).json(poll);
 };
 
+// Todo: add 10 limit for poll creation:
 const createPoll = async (
   req: Request<{}, {}, CreatePollBody>,
   res: Response,
