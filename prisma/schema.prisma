@@ -1,7 +1,4 @@
-// This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
   provider = "prisma-client-js"
@@ -13,50 +10,52 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  name      String
-  email     String   @unique
+  id        String   @id
+  username  String   @unique
   password  String
+
+  polls Poll[]
+}
+
+model Poll {
+  id String @id
+  title String
+  description String
   createdAt DateTime @default(now())
+  lastModifiedAt DateTime @updatedAt
+  createdBy String
 
-  watchListItems WatchListItem[]
-  movies         Movie[]
+  creator User @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+  options Option[]
+  participants Participant[]
 }
 
-model Movie {
-  id          String   @id @default(uuid())
-  title       String
-  overview    String?
-  releaseYear Int
-  genres      String[] @default([])
-  posterUrl   String?
-  createdBy   String
-  createdAt   DateTime @default(now())
+model Option {
+  id String @id
+  // Todo: Change this to just "name":
+  optionName String
+  pollId String
 
-  creator        User            @relation(fields: [createdBy], references: [id], onDelete: Cascade)
-  watchListItems WatchListItem[]
+  poll Poll @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  votes Vote[]
 }
 
-model WatchListItem {
-  id        String          @id @default(uuid())
-  userId    String
-  movieId   String
-  status    WatchListStatus @default(PLANNED)
-  rating    Int?
-  notes     String?
-  createdAt DateTime        @default(now())
-  updatedAt DateTime        @default(now())
+model Participant {
+  id String @id
+  name String
+  createdAt DateTime @default(now())
+  pollId String
 
-  // Relations:
-  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  movie Movie @relation(fields: [movieId], references: [id], onDelete: Cascade)
-  @@unique([userId, movieId])
+  poll Poll @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  votes Vote[]
 }
 
-// Accepted items as :
-enum WatchListStatus {
-  PLANNED
-  WATCHING
-  COMPLETED
-  DROPPED
+model Vote {
+  id String @id
+  optionId String
+  participantId String
+
+  option Option @relation(fields: [optionId], references: [id], onDelete: Cascade)
+  participant Participant @relation(fields: [participantId], references: [id], onDelete: Cascade)
+  @@unique([optionId, participantId])
 }

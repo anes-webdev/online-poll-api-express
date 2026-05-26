@@ -13,7 +13,8 @@ const connectDB = async () => {
     await prisma.$connect();
     console.log("Connected to database");
   } catch (error) {
-    console.error("Error connecting to database", error.message);
+    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error("Error connecting to database", message);
     process.exit(1);
   }
 };
@@ -23,4 +24,4 @@ const disconnectDB = async () => {
   console.log("Disconnected from database");
 };
 
-export { prisma ,connectDB, disconnectDB };
+export { prisma, connectDB, disconnectDB };

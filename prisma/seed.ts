@@ -9,7 +9,6 @@ const movies = [
     genres: ["Drama"],
     posterUrl: "sample url",
     createdBy: userId,
-    // runtime: 139,
   },
 ];
 
@@ -27,7 +26,6 @@ const main = async () => {
 main()
   .catch((err) => {
     console.log(err);
-    // Close server in error:
     process.exit(1);
   })
   .finally(async () => {

@@ -1,9 +1,12 @@
 import express from "express";
-import movieRoutes from "./routes/movieRoutes.js";
+import pollRoutes from "./routes/pollRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import voteRoutes from "./routes/voteRoutes.js";
 import watchListRoutes from "./routes/watchListRoutes.js";
 import { config } from "dotenv";
 import { connectDB, disconnectDB } from "./config/db.js";
+import cookieParser from "cookie-parser";
+import cors from "cors";
 import "dotenv/config";
 
 config();
@@ -11,16 +14,17 @@ connectDB();
 
 const app = express();
 
-// Body parsing middlewares
-// In all requests handles json req, without this code we can't access json in request body
 app.use(express.json());
-// Automatically parse data in html form submission:
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(cors({
+  origin: process.env.CLIENT_URL,
+  credentials: true
+}));
 
-// API Routes:
 app.use("/auth", authRoutes);
-app.use("/movies", movieRoutes);
-app.use("/watch-list", watchListRoutes);
+app.use("/polls", pollRoutes);
+app.use("/polls/votes", voteRoutes);
 
 const port = 5001;
 const server = app.listen(port, () => {
