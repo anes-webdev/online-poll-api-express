@@ -3,7 +3,6 @@ import { prisma } from "../config/db.js";
 import { CreatePollBody, pollVotesQueryArgs } from "../types/poll.types.js";
 import { generateId } from "../utils/generateId.js";
 import { formatPollVotesResponse } from "../mappers/pollVotes.mapper.js";
-import { Poll } from "@prisma/client";
 
 const getPolls = async (req: Request, res: Response) => {
   // Todo: add search, filter:
