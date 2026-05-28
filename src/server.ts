@@ -15,13 +15,6 @@ connectDB();
 const app = express();
 app.set("trust proxy", 1);
 
-app.use((req, res, next) => {
-  console.log("FULL URL:", req.originalUrl);
-  console.log("PATH:", req.path);
-  console.log("METHOD:", req.method);
-  next();
-});
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
