@@ -4,6 +4,7 @@ import authRoutes from "./routes/authRoutes.js";
 import voteRoutes from "./routes/voteRoutes.js";
 import { config } from "dotenv";
 import { connectDB, disconnectDB } from "./config/db.js";
+import { initSocket } from "./config/socket.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import "dotenv/config";
@@ -31,6 +32,8 @@ const port = 5001;
 const server = app.listen(port, () => {
   console.log(`Server running on Port ${port}`);
 });
+
+initSocket(server);
 
 process.on("unhandledRejection", async (error) => {
   console.error("Unhandled rejection", error);
