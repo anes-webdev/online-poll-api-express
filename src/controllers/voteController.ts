@@ -3,6 +3,10 @@ import type { Request, Response } from "express";
 import { prisma } from "../config/db.js";
 import { generateId } from "../utils/generateId.js";
 import { emitNewVote } from "../config/socket.js";
+import {
+  DEMO_USER_POLL_LIMIT,
+  DEMO_USER_VOTE_LIMIT,
+} from "../constants/limits.js";
 
 const registerVote = async (
   req: Request<{}, {}, RegisterVoteBody>,
@@ -28,6 +32,16 @@ const registerVote = async (
               .json({ message: "All options must be from the same poll" });
         }
       }
+      // Todo: change username to role:
+      // Check demo user limits:
+      const poll = await prisma.poll.findUnique({
+        where: { id: pollId },
+        include: { creator: true },
+      });
+      if (poll?.creator.username === "demo")
+        return res.status(403).json({
+          message: `This poll has reached the demo limit of ${DEMO_USER_VOTE_LIMIT} votes.`,
+        });
 
       const participant = await prisma.participant.create({
         data: { id: generateId(), name: participantName, pollId },

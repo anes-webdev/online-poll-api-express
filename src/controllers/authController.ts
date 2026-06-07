@@ -39,7 +39,7 @@ const signin = async (req: Request, res: Response) => {
   const { username, password } = req.body;
   const user = await prisma.user.findFirst({ where: { username, password } });
   if (!user) {
-    return res.status(404).send("Invalid email or password");
+    return res.status(404).json({ message: "Invalid email or password" });
   }
   // const isPasswordValid = await bcrypt.compare(password, user.password);
   // if (!isPasswordValid) {
@@ -52,7 +52,7 @@ const signin = async (req: Request, res: Response) => {
 const demoSignin = async (_req: Request, res: Response) => {
   const user = await prisma.user.findFirst({ where: { username: 'demo' } });
   if (!user) {
-    return res.status(404).send("Invalid email or password");
+    return res.status(404).json({ message: "Invalid email or password" });
   }
   const token = generateToken(user.id, res);
   res.status(201).send(token);
