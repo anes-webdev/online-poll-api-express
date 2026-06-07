@@ -32,13 +32,12 @@ const registerVote = async (
               .json({ message: "All options must be from the same poll" });
         }
       }
-      // Todo: change username to role:
       // Check demo user limits:
       const poll = await prisma.poll.findUnique({
         where: { id: pollId },
         include: { creator: true },
       });
-      if (poll?.creator.username === "demo")
+      if (poll?.creator.role === "demo")
         return res.status(403).json({
           message: `This poll has reached the demo limit of ${DEMO_USER_VOTE_LIMIT} votes.`,
         });

@@ -39,9 +39,8 @@ const createPoll = async (
 ) => {
   const { title, description, options } = req.body;
 
-  // Todo: update username to role:
   // Check demo user limits:
-  if (req.user.username === "demo") {
+  if (req.user.role === "demo") {
     const polls = await prisma.poll.findMany({ where: { createdBy: req.user.id } });
     if (polls.length === DEMO_USER_POLL_LIMIT) {
       return res.status(403).json({ message: `Demo user can create up to ${DEMO_USER_POLL_LIMIT} polls.` })

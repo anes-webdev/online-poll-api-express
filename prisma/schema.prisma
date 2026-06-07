@@ -9,11 +9,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserRole {
+  user
+  admin
+  demo
+}
+
 model User {
-  // Todo: add role: admin, demo, user ...
   id        String   @id
   username  String   @unique
   password  String
+  role      UserRole  @default(demo)
 
   polls Poll[]
 }
