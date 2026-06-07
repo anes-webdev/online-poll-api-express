@@ -26,7 +26,7 @@ const pollSchemaCommonFields = {
 
 const pollOptionsSchema = z.array(
   z.object({
-    optionName: z.string(),
+    name: z.string(),
   }),
 );
 

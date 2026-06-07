@@ -8,7 +8,7 @@ export const formatPollVotesResponse = (poll: PollWithVotes) => {
     }));
     return {
       id: option.id,
-      optionName: option.optionName,
+      name: option.name,
       participants,
     };
   });
@@ -16,7 +16,7 @@ export const formatPollVotesResponse = (poll: PollWithVotes) => {
   const pollParticipants = poll.participants.map((participant) => {
     const choices = participant.votes.map((vote) => ({
       id: vote.option.id,
-      optionName: vote.option.optionName,
+      name: vote.option.name,
     }));
     return {
       id: participant.id,

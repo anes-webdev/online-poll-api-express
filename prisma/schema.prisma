@@ -9,11 +9,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserRole {
+  user
+  admin
+  demo
+}
+
 model User {
-  // Todo: add role: admin, demo, user ...
   id        String   @id
   username  String   @unique
   password  String
+  role      UserRole  @default(demo)
 
   polls Poll[]
 }
@@ -33,8 +39,7 @@ model Poll {
 
 model Option {
   id String @id
-  // Todo: Change this to just "name":
-  optionName String
+  name String
   pollId String
 
   poll Poll @relation(fields: [pollId], references: [id], onDelete: Cascade)
