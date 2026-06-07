@@ -8,7 +8,6 @@ export type CreatePollBody = {
   }[];
 };
 
-/** Reuse this in `prisma.poll.findUnique({ ...pollVotesQueryArgs })` */
 export const pollVotesQueryArgs = {
   include: {
     options: {
@@ -32,5 +31,4 @@ export const pollVotesQueryArgs = {
   },
 } satisfies Pick<Prisma.PollFindUniqueArgs, "include">;
 
-/** Poll shape returned by `getPollVotes` query — use as mapper input */
 export type PollWithVotes = Prisma.PollGetPayload<typeof pollVotesQueryArgs>;
