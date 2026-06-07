@@ -49,6 +49,15 @@ const signin = async (req: Request, res: Response) => {
   res.status(201).send(token);
 };
 
+const demoSignin = async (_req: Request, res: Response) => {
+  const user = await prisma.user.findFirst({ where: { username: 'demo' } });
+  if (!user) {
+    return res.status(404).send("Invalid email or password");
+  }
+  const token = generateToken(user.id, res);
+  res.status(201).send(token);
+};
+
 const logout = async (_req: Request, res: Response) => {
   res.cookie("JWT", "", {
     httpOnly: true,
@@ -60,4 +69,4 @@ const logout = async (_req: Request, res: Response) => {
   });
 };
 
-export { signin, logout };
+export { signin, logout, demoSignin };
