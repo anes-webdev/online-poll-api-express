@@ -57,14 +57,14 @@ const createPoll = async (
       await prisma.option.createMany({
         data: options.map((option) => ({
           id: generateId(),
-          optionName: option.optionName,
+          name: option.name,
           pollId: createdPoll.id,
         })),
       });
 
       res.status(201).json(createdPoll);
     });
-  } catch {
+  } catch (error) {
     res.status(500).json({
       message: "Something went wrong while creating the poll",
     });

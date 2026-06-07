@@ -4,7 +4,7 @@ export type CreatePollBody = {
   title: string;
   description: string;
   options: {
-    optionName: string;
+    name: string;
   }[];
 };
 
@@ -13,7 +13,7 @@ export const pollVotesQueryArgs = {
     options: {
       select: {
         id: true,
-        optionName: true,
+        name: true,
         votes: {
           select: { participant: { select: { id: true, name: true } } },
         },
@@ -24,7 +24,7 @@ export const pollVotesQueryArgs = {
         id: true,
         name: true,
         votes: {
-          select: { option: { select: { id: true, optionName: true } } },
+          select: { option: { select: { id: true, name: true } } },
         },
       },
     },

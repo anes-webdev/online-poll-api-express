@@ -61,7 +61,7 @@ const registerVote = async (
           id: true,
           name: true,
           votes: {
-            select: { option: { select: { id: true, optionName: true } } },
+            select: { option: { select: { id: true, name: true } } },
           },
         },
       });
