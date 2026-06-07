@@ -25,8 +25,8 @@ app.use(cors({
 }));
 
 app.use("/auth", authRoutes);
-app.use("/polls", pollRoutes);
 app.use("/polls/votes", voteRoutes);
+app.use("/polls", pollRoutes);
 
 const port = 5001;
 const server = app.listen(port, () => {
