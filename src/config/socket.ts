@@ -19,7 +19,6 @@ export const initSocket = (server: HttpServer) => {
     });
 
     socket.on("leave-poll", (pollId: string) => {
-      console.log('user left');
       socket.leave(pollRoom(pollId));
     });
   });
