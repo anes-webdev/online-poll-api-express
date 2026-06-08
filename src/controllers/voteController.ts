@@ -35,9 +35,9 @@ const registerVote = async (
       // Check demo user limits:
       const poll = await prisma.poll.findUnique({
         where: { id: pollId },
-        include: { creator: true },
+        include: { creator: true, participants: true },
       });
-      if (poll?.creator.role === "demo")
+      if (poll?.creator.role === "demo" && poll.participants.length === DEMO_USER_VOTE_LIMIT)
         return res.status(403).json({
           message: `This poll has reached the demo limit of ${DEMO_USER_VOTE_LIMIT} votes.`,
         });
